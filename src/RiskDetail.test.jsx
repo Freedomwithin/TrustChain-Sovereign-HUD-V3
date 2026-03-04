@@ -44,15 +44,13 @@ const fetchMock = vi.fn((url, options) => {
       }),
     });
   }
-  if (urlString.includes('/api/pools/integrity')) {
-    return Promise.resolve({
-      ok: true,
-      json: async () => ({}),
-    });
-  }
+  // Remove unused pools integrity fetch mock since we now use /api/verify for pools too
   return Promise.resolve({
       ok: true,
-      json: async () => ({}),
+      json: async () => ({
+        status: 'PROBATIONARY',
+        scores: { gini: 0.125 }
+      }),
   });
 });
 
@@ -68,8 +66,12 @@ test('displays Risk Detail when status is PROBATIONARY', async () => {
   // Wait for Verifying to disappear
   await waitForElementToBeRemoved(() => screen.queryByText('Verifying...'), { timeout: 3000 });
 
-  const badge = await screen.findByText('NEW ENTITY');
-  expect(badge).toBeInTheDocument();
+  const badge = await screen.findAllByText('NEW ENTITY');
+  expect(badge[0]).toBeInTheDocument();
+
+  // Check for Auditor Note
+  const auditorNote = await screen.findAllByText(/Auditor Note: JCq7/i);
+  expect(auditorNote[0]).toBeInTheDocument();
 
   // Check for Agent Insight
   expect(screen.getByText(/Agent Insight/i)).toBeInTheDocument();

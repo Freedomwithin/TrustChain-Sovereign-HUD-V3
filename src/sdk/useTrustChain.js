@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 
-const DEFAULT_API_URL = import.meta.env.VITE_API_BASE_URL || 'https://trustchain-sovereign-backend.vercel.app';
+const DEFAULT_API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
 /**
  * useTrustChain Hook
@@ -146,7 +146,7 @@ export function useTrustChain(options = {}) {
     data,
     loading,
     error,
-    voterWeightMultiplier: data?.governance?.voterWeightMultiplier || 1.0,
+    voterWeightMultiplier: data?.governance?.tier === 'Steward' ? 1.5 : (data?.governance?.voterWeightMultiplier || 1.0),
     refetch: () => fetchData()
   };
 }
