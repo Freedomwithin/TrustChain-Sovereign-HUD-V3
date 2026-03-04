@@ -69,9 +69,10 @@ test('displays Risk Detail when status is PROBATIONARY', async () => {
   const badge = await screen.findAllByText('NEW ENTITY');
   expect(badge[0]).toBeInTheDocument();
 
-  // Check for Auditor Note
-  const auditorNote = await screen.findAllByText(/Auditor Note: JCq7/i);
-  expect(auditorNote[0]).toBeInTheDocument();
+  // Check for Auditor Note using a more specific query instead of brittle array indexing
+  const auditorNotes = await screen.findAllByTestId('auditor-note');
+  expect(auditorNotes.length).toBeGreaterThan(0);
+  expect(auditorNotes[0]).toHaveTextContent(/Auditor Note: JCq7/i);
 
   // Check for Agent Insight
   expect(screen.getByText(/Agent Insight/i)).toBeInTheDocument();

@@ -9,10 +9,8 @@ import InstitutionalInsights from './components/InstitutionalInsights.jsx';
 import GovernanceStanding from './components/GovernanceStanding.jsx';
 import { useTrustChain } from './sdk/useTrustChain';
 import { getStatusDisplay } from './utils/statusDisplay';
+import { API_BASE_URL } from './config/constants';
 import './App.css';
-
-// Ensure this matches your .env.example or defaults to the stable Vercel production
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
 function WalletIntegrity({ isSimulationMode, showToast }) {
   const { connected: walletConnected, publicKey } = useWallet();
@@ -101,7 +99,7 @@ function PoolIntegrityBadge({ integrity, loading }) {
         <small style={{ display: 'block', fontSize: '11px', fontWeight: 'bold' }}>
           Gini: {integrity?.giniScore?.toFixed(3) || '0.125'}
         </small>
-        <small style={{
+        <small data-testid="auditor-note" style={{
           display: 'block',
           fontSize: '9px',
           color: '#00ffa3',

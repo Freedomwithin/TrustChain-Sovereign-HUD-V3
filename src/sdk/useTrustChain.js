@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-
-const DEFAULT_API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+import { API_BASE_URL as DEFAULT_API_URL } from '../config/constants';
 
 /**
  * useTrustChain Hook
