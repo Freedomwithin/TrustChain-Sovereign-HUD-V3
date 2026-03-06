@@ -47,6 +47,11 @@ function WalletIntegrity({ isSimulationMode, showToast }) {
     reason = "Institutional Integrity Confirmed via Notary";
     totalScore = 95;
     fairScaleSocial = 80;
+    governance = {
+      tier: 'Steward',
+      voterWeightMultiplier: 1.5,
+      reason: 'Institutional Whitelist'
+    };
   }
   // --- END OVERRIDE ---
 
